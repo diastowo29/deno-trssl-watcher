@@ -1,0 +1,11 @@
+{
+  "apps": {
+    "T06795YTP29": {
+      "app_id": "A06FBUL6DFC",
+      "IsDev": false,
+      "team_domain": "trees-digital-labs",
+      "team_id": "T06795YTP29"
+    }
+  },
+  "default": "trees-digital-labs"
+}
