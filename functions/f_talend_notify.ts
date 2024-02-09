@@ -1,8 +1,8 @@
 import {DefineFunction, Schema, SlackFunction} from "deno-slack-sdk/mod.ts";
 import {talendJobBlock, talendRerunJobBlock, talendJobDiscussedBlock} from "./blocks/message_block.ts";
 import { newChannelView } from "../views/create_discussion.ts";
-import https from "node:https";
-import fs from "node:fs";
+// import https from "node:https";
+// import fs from "node:fs";
 
 export const talendJobFunction = DefineFunction({
     callback_id: "talend_notify_function",
@@ -64,9 +64,9 @@ export default SlackFunction(talendJobFunction, async ({
     let channel = body.channel.id;
     let actions = body.actions[0];
     if (actions.action_id == 'rerun_job') {
-        // let talendApi = 'https://talend.harpa-go.com:9090/org.talend.administrator/metaServlet?';
+        let talendApi = 'https://talend.harpa-go.com:9090/org.talend.administrator/metaServlet?';
         // let talendApi = 'https://con-treesdemo.zendesk.com/api/v2/tickets.json';
-        console.log(actions.value);
+        // console.log(actions.value);
         // let opts = {
         //     method: 'GET',
         //     hostname: 'talend.harpa-go.com',
@@ -79,27 +79,27 @@ export default SlackFunction(talendJobFunction, async ({
         //     console.log(response.statusCode)
         // }).end();
         
-        // const issue = await fetch(`${talendApi}${actions.value}`, {
-        //     method: "GET",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        // }).then(async (response) => {
-        //     if (response.status == 200) {
-        //         const message = await client
-        //             .chat
-        //             .update({
-        //                 channel: channel,
-        //                 ts: message_ts,
-        //                 blocks: talendRerunJobBlock(inputs.job_title, inputs.job_id, inputs.status, inputs.last_run, inputs.retry_url, inputs.desc, body.user.name).blocks
-        //             });
-        //             // console.log(response);
-        //     }
-        //     console.log(response)
-        //     console.log(response.status)
-        // }).catch(function(err) {
-        //     console.log(err);
-        // })
+        const issue = await fetch(`${talendApi}${actions.value}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }).then(async (response) => {
+            if (response.status == 200) {
+                const message = await client
+                    .chat
+                    .update({
+                        channel: channel,
+                        ts: message_ts,
+                        blocks: talendRerunJobBlock(inputs.job_title, inputs.job_id, inputs.status, inputs.last_run, inputs.retry_url, inputs.desc, body.user.name).blocks
+                    });
+                    // console.log(response);
+            }
+            console.log(response)
+            console.log(response.status)
+        }).catch(function(err) {
+            console.log(err);
+        })
     } else if (actions.action_id == 'assign_job') {
         let blocks = body.message.blocks;
         let newBlocks: any[] = [];
