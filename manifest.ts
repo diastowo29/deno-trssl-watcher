@@ -7,7 +7,7 @@ import { talendJobFunction } from './functions/f_talend_notify.ts';
  * https://api.slack.com/future/manifest
  */
 export default Manifest({
-  name: 'TRSSL - Watcher',
+  name: 'TRSSL - Owl',
   description: 'Watch anything when you sleep',
   icon: 'assets/Owl.png',
   functions: [talendJobFunction],

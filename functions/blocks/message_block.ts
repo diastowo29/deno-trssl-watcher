@@ -34,7 +34,7 @@ export function talendJobBlock(title: string, id: string, status: string, last_r
                     "type": "section",
                     "text": {
                         "type": "mrkdwn",
-                        "text": "*Failed Reason: *"
+                        "text": "*Log Details: *"
                     }
                 },
                 {
@@ -44,32 +44,35 @@ export function talendJobBlock(title: string, id: string, status: string, last_r
                         "text": desc
                     }
                 },
-                { 
-                    type: "actions",
-                    elements: [
-                        {
-                            action_id: "rerun_job",
-                            type: "button",
-                            text: {
-                                type: "plain_text",
-                                "emoji": true,
-                                text: ":repeat: Restart Job"
+                ...((status !='RUNNING') ? [
+                    { 
+                        type: "actions",
+                        elements: [
+                            {
+                                action_id: "rerun_job",
+                                type: "button",
+                                text: {
+                                    type: "plain_text",
+                                    "emoji": true,
+                                    text: ":repeat: Restart Job"
+                                },
+                                style: "primary",
+                                value: retry_params
                             },
-                            style: "primary",
-                            value: retry_params
-                        },
-                        {
-                            action_id: "discuss_job",
-                            type: "button",
-                            text: {
-                                type: "plain_text",
-                                "emoji": true,
-                                text: ":rocket: Create Discussion"
-                            },
-                            value: retry_params
-                        }
-                    ]
-                }]: [])
+                            {
+                                action_id: "discuss_job",
+                                type: "button",
+                                text: {
+                                    type: "plain_text",
+                                    "emoji": true,
+                                    text: ":rocket: Create Discussion"
+                                },
+                                value: retry_params
+                            }
+                        ]
+                    }
+                ]:[])
+            ]:[])
         ]
     }
 }
